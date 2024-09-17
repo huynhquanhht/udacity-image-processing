@@ -7,16 +7,16 @@ export const validateMiddleware = async (
   req: Request,
   res: Response,
   next: NextFunction,
-) => {
+): Promise<void> => {
   const fileName: string = req.query.fileName as string
   const width: string = req.query.width as string
   const height: string = req.query.height as string
-  const digitRegex = /^\d+$/
-  const alphabetRegex = /^[A-Za-z]+$/
-  const filePath =
+  const positiveNumberRegex: RegExp = /^[1-9]\d*$/
+  const alphabetRegex: RegExp = /^[A-Za-z]+$/
+  const filePath: string =
     path.join(__dirname, '../../images/output/') +
     `${fileName}_${width}_${height}.jpg`
-  const messages = []
+  const messages: string[] = []
   if (fileName == undefined || fileName == '') {
     messages.push('fileName query is required.')
   } else if (!alphabetRegex.test(fileName)) {
@@ -25,14 +25,14 @@ export const validateMiddleware = async (
 
   if (width === undefined) {
     messages.push('width query is required.')
-  } else if (!digitRegex.test(width)) {
-    messages.push('width query must be number.')
+  } else if (!positiveNumberRegex.test(width)) {
+    messages.push('width query must be positive number.')
   }
 
   if (height === undefined) {
     messages.push('height query is required.')
-  } else if (!digitRegex.test(height)) {
-    messages.push('height query must be number.')
+  } else if (!positiveNumberRegex.test(height)) {
+    messages.push('height query must be positive number.')
   }
 
   if (messages.length) {
@@ -44,7 +44,7 @@ export const validateMiddleware = async (
   try {
     await fs.promises.readFile(filePath, 'utf8')
     res.status(200).sendFile(filePath)
-  } catch (err) {
+  } catch (err: unknown) {
     next()
   }
 }

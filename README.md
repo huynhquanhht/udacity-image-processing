@@ -25,6 +25,7 @@ Feel free to attempt to create this project based on the overview and rubric spe
    - Where will you keep your tests?
    - How do you plan to name your routes? Utilities?
 3. **Configure your middleware and dependencies.**
+   Url: http://localhost:3000/image?fileName=fjord&width=300&height=300
    You have quite a few dependencies that all need to work together. Sometimes it's easiest to write some simple js functions to test that all of your dependencies work together before you begin adding any functionality.
 
    - Does your TypeScript compile?

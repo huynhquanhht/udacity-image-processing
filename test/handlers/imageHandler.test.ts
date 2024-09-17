@@ -1,6 +1,7 @@
 import { processImage, resizeImage } from '../../src/handlers/imageHandler'
 import { Request, Response } from 'express'
 import sharp from 'sharp'
+import path from 'path'
 
 const mockResponse = (): Response => {
   const res = {} as Response
@@ -31,7 +32,7 @@ describe('Test imageHandler', () => {
       },
     } as unknown as Request
     const expectedFilePath =
-      'E:\\image-processing\\images\\output\\fjord_200_200.jpg'
+      path.join(__dirname, '../../images/output/') + 'fjord_200_200.jpg'
     let response: Response = mockResponse()
     await processImage(request, response)
 
@@ -77,9 +78,9 @@ describe('Test imageHandler', () => {
   })
 
   test('resizeImage_success', async () => {
-    const imagePath: string = 'E:\\image-processing\\images\\storage\\fjord.jpg'
+    const imagePath: string = 'fjord.jpg'
     const destinationPath: string =
-      'E:\\image-processing\\images\\output\\fjord_200_200.jpg'
+      path.join(__dirname, '../../images/output/') + 'fjord_200_200.jpg'
     const width: number = 200
     const height: number = 200
 
@@ -94,9 +95,10 @@ describe('Test imageHandler', () => {
   })
 
   test('resizeImage_throwError', async () => {
-    const imagePath: string = 'E:\\image-processing\\images\\storage\\fjord.jpg'
+    const imagePath: string =
+      path.join(__dirname, '../../images/storage/') + 'fjord.jpg'
     const destinationPath: string =
-      'E:\\image-processing\\images\\output\\fjord_200_200.jpg'
+      path.join(__dirname, '../../images/output/') + 'fjord_200_200.jpg'
     const width: number = 200
     const height: number = 200
 

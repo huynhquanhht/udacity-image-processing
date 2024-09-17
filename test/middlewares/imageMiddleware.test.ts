@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import { validateMiddleware } from '../../src/middlewares/imageMiddleware'
+import path from 'path'
 
 const mockResponse = (): Response => {
   const response = {} as Response
@@ -61,7 +62,7 @@ describe('Test imageMiddleware', () => {
     } as unknown as Request
     const response = mockResponse()
     const expectedFilePath =
-      'E:\\image-processing\\images\\output\\fjord_200_200.jpg'
+      path.join(__dirname, '../../images/output/') + 'fjord_200_200.jpg'
 
     await validateMiddleware(request, response, mockNext)
     expect(response.status).toHaveBeenCalledWith(200)
